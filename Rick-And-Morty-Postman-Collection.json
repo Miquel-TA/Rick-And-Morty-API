@@ -1,0 +1,306 @@
+{
+    "info": {
+        "_postman_id": "d4ff4ccf-cc34-462b-a547-2824a8615248",
+        "name": "Rick and Morty API Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Generate JWT Token",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "{{url}}/api/auth/token",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "auth",
+                        "token"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var jsonResponse = pm.response.json();",
+                            "pm.test('Response should be 200', function() {",
+                            "    pm.response.to.have.status(200);",
+                            "});",
+                            "pm.test('Token should be present in the response', function() {",
+                            "    pm.expect(jsonResponse).to.have.property('token');",
+                            "    var token = jsonResponse.token;",
+                            "    pm.environment.set('jwt_token', 'Bearer ' + token);",
+                            "    console.log('JWT Token set to: ' + pm.environment.get('jwt_token'));",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get All Characters - No Filters",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var responseData = pm.response.json();",
+                            "pm.test('Response should contain 100 characters', function() {",
+                            "    pm.expect(responseData.length).to.equal(100);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get All Characters - Status Alive",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters?status=alive",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters"
+                    ],
+                    "query": [
+                        {
+                            "key": "status",
+                            "value": "alive"
+                        }
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var responseData = pm.response.json();",
+                            "pm.test('Response should only contain alive characters', function() {",
+                            "    responseData.forEach(function(character) {",
+                            "        pm.expect(character.status).to.equal('Alive');",
+                            "    });",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get All Characters - Status Dead",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters?status=dead",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters"
+                    ],
+                    "query": [
+                        {
+                            "key": "status",
+                            "value": "dead"
+                        }
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var responseData = pm.response.json();",
+                            "pm.test('Response should only contain dead characters', function() {",
+                            "    responseData.forEach(function(character) {",
+                            "        pm.expect(character.status).to.equal('Dead');",
+                            "    });",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get All Characters - Invalid Status",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters?status=ascended",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters"
+                    ],
+                    "query": [
+                        {
+                            "key": "status",
+                            "value": "ascended"
+                        }
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test('Response should be 500', function() {",
+                            "    pm.response.to.have.status(500);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Character By ID - ID 5",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters/5",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters",
+                        "5"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "var responseData = pm.response.json();",
+                            "pm.test('Character name should be Jerry Smith', function() {",
+                            "    pm.expect(responseData.name).to.equal('Jerry Smith');",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Get Character By ID - Non-existent ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "{{jwt_token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{url}}/api/characters/-1",
+                    "host": [
+                        "{{url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "characters",
+                        "-1"
+                    ]
+                }
+            },
+            "response": [],
+            "event": [
+                {
+                    "listen": "test",
+                    "script": {
+                        "exec": [
+                            "pm.test('Response should be 500', function() {",
+                            "    pm.response.to.have.status(500);",
+                            "});"
+                        ],
+                        "type": "text/javascript"
+                    }
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "url",
+            "value": "http://localhost:5000"
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
