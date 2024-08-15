@@ -23,13 +23,22 @@
             .Gender = c.Gender,
             .Status = c.Status
         }).ToList()
+
+        If DataGridView1.Columns("DetailsButton") Is Nothing Then
+            Dim buttonColumn As New DataGridViewButtonColumn()
+            buttonColumn.Name = "DetailsButton"
+            buttonColumn.HeaderText = "Details"
+            buttonColumn.Text = "View Details"
+            buttonColumn.UseColumnTextForButtonValue = True
+            DataGridView1.Columns.Add(buttonColumn)
+        End If
     End Function
 
-    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        Dim selectedRow = DataGridView1.Rows(e.RowIndex)
-        Dim characterId = Convert.ToInt32(selectedRow.Cells("Id").Value)
-
-        Dim detailForm = New DetailForm(characterId)
-        detailForm.ShowDialog()
+    Private Sub DataGridView1_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentClick
+        If e.ColumnIndex = DataGridView1.Columns("DetailsButton").Index AndAlso e.RowIndex >= 0 Then
+            Dim characterId = Convert.ToInt32(DataGridView1.Rows(e.RowIndex).Cells("Id").Value)
+            Dim detailForm = New DetailForm(characterId)
+            detailForm.ShowDialog()
+        End If
     End Sub
 End Class
