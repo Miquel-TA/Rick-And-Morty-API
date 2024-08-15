@@ -35,7 +35,7 @@ Partial Class MainForm
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Location = New System.Drawing.Point(12, 41)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(444, 397)
+        Me.DataGridView1.Size = New System.Drawing.Size(561, 397)
         Me.DataGridView1.TabIndex = 0
         '
         'ComboBox1
@@ -80,7 +80,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(468, 450)
+        Me.ClientSize = New System.Drawing.Size(585, 450)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ComboBox2)
