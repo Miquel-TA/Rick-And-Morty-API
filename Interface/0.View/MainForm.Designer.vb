@@ -87,7 +87,7 @@ Partial Class MainForm
         Me.Controls.Add(Me.ComboBox1)
         Me.Controls.Add(Me.DataGridView1)
         Me.Name = "MainForm"
-        Me.Text = "Form1"
+        Me.Text = "Rick and Morty Data Grid"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

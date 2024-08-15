@@ -65,7 +65,7 @@ Partial Class DetailForm
         Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.CharacterLabel)
         Me.Name = "DetailForm"
-        Me.Text = "DetailForm"
+        Me.Text = "Detailed Data"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
